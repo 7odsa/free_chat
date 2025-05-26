@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "357417036938",
+    "project_id": "free-chat-ce467",
+    "storage_bucket": "free-chat-ce467.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357417036938:android:2f063dccdcac5aa11b1173",
+        "android_client_info": {
+          "package_name": "com.example.free_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKKjuGlBf3nF3gxf9OyyreY4YrZ1ohdQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
