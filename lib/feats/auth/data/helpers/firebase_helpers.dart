@@ -1,31 +1,38 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class FirebaseHelpers {
-  static Future<bool> createNewUser(String email, String password) async {
+  static Future<String?> createNewUser({
+    required String email,
+    required String password,
+  }) async {
     try {
       final credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      final id = credential.user!.uid;
+
+      return id;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }
-      return false;
+      return null;
     } catch (e) {
       print("ERROR   $e");
-      return false;
+      return null;
     }
-    return true;
   }
 
-  static Future<bool> signIn(String email, String password) async {
+  static Future<String?> signIn(String email, String password) async {
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       print('LOOOOOOOOOOOOOOOOOOOOOOOOL signedIN');
+
+      return credential.user!.uid;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -33,9 +40,8 @@ abstract class FirebaseHelpers {
         print('Wrong password provided for that user.');
       }
       print('a77777777777777777777777777a ');
-      return false;
+      return null;
     }
-    return true;
   }
 
   static Future<void> signOut() async {

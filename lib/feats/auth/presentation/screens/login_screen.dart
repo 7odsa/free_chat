@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:free_chat/feats/auth/helpers/firebase_helpers.dart';
+import 'package:free_chat/feats/auth/data/models/user_dm.dart';
+import 'package:free_chat/feats/auth/data/repos/signin_repo.dart';
 import 'package:free_chat/feats/auth/presentation/screens/signup_screen.dart';
 import 'package:free_chat/feats/chats/ui/chat_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool isSigningin = false;
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -12,27 +23,28 @@ class LoginScreen extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 10, 135, 238),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 200,
-              height: 200,
-              child: Image.asset('assets/chat.png'),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 200,
+                  height: 200,
+                  child: Image.asset('assets/chat.png'),
+                ),
+                SizedBox(height: 32),
+                buildAuthLogin(context),
+              ],
             ),
-            SizedBox(height: 32),
-            buildAuthLogin(context),
-          ],
+          ),
         ),
       ),
     );
   }
 
   Widget buildAuthLogin(BuildContext ctx) {
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -59,26 +71,38 @@ class LoginScreen extends StatelessWidget {
             controller: passwordController,
           ),
           SizedBox(height: 8),
-          FilledButton(
-            onPressed: () async {
-              if (await FirebaseHelpers.signIn(
-                emailController.text,
-                passwordController.text,
-              )) {
-                if (ctx.mounted) {
-                  Navigator.pushReplacement(
-                    ctx,
-                    MaterialPageRoute(builder: (context) => ChatScreen()),
+          isSigningin
+              ? CircularProgressIndicator()
+              : FilledButton(
+                onPressed: () async {
+                  setState(() {
+                    isSigningin = true;
+                  });
+
+                  final user = await SigninRepo.signinRepo(
+                    email: emailController.text,
+                    password: passwordController.text,
                   );
-                }
-              }
-            },
-            child: Text('Login'),
-          ),
+                  if (user != null) {
+                    UserDM.currUser = user;
+                    if (ctx.mounted) {
+                      Navigator.pushReplacement(
+                        ctx,
+                        MaterialPageRoute(builder: (context) => ChatScreen()),
+                      );
+                    }
+                  }
+
+                  setState(() {
+                    isSigningin = false;
+                  });
+                },
+                child: Text('Login'),
+              ),
           SizedBox(height: 8),
           TextButton(
             onPressed: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 ctx,
                 MaterialPageRoute(builder: (context) => SignUpScreen()),
               );
