@@ -1,13 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class FirebaseHelpers {
+  static final _firebase = FirebaseAuth.instance;
   static Future<String?> createNewUser({
     required String email,
     required String password,
   }) async {
     try {
-      final credential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      final credential = await _firebase.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       final id = credential.user!.uid;
 
       return id;
@@ -26,7 +29,7 @@ abstract class FirebaseHelpers {
 
   static Future<String?> signIn(String email, String password) async {
     try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final credential = await _firebase.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -45,6 +48,6 @@ abstract class FirebaseHelpers {
   }
 
   static Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
+    await _firebase.signOut();
   }
 }

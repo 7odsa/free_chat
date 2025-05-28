@@ -4,6 +4,7 @@ import 'package:free_chat/feats/auth/data/models/user_dm.dart';
 class FirestoreHelpres {
   final db = FirebaseFirestore.instance;
   final kUsersCollectionName = 'users';
+
   Future<void> addNewUser(UserDM user) async {
     await db.collection(kUsersCollectionName).doc(user.id).set({
       'name': user.username,
