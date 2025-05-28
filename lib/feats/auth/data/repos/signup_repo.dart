@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:free_chat/feats/auth/data/helpers/firebase_helpers.dart';
-import 'package:free_chat/feats/auth/data/helpers/firestore_helpres.dart';
-import 'package:free_chat/feats/auth/data/helpers/helpers.dart';
-import 'package:free_chat/feats/auth/data/helpers/shared_pref.dart';
+import 'package:free_chat/feats/auth/helpers/firebase_helpers.dart';
+import 'package:free_chat/feats/auth/helpers/firestore_helpres.dart';
+import 'package:free_chat/feats/auth/helpers/helpers.dart';
+import 'package:free_chat/feats/auth/helpers/shared_pref.dart';
 import 'package:free_chat/feats/auth/data/models/user_dm.dart';
 // import 'package:path/path.dart' as path;
 

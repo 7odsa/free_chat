@@ -1,6 +1,6 @@
-import 'package:free_chat/feats/auth/data/helpers/firebase_helpers.dart';
-import 'package:free_chat/feats/auth/data/helpers/firestore_helpres.dart';
-import 'package:free_chat/feats/auth/data/helpers/shared_pref.dart';
+import 'package:free_chat/feats/auth/helpers/firebase_helpers.dart';
+import 'package:free_chat/feats/auth/helpers/firestore_helpres.dart';
+import 'package:free_chat/feats/auth/helpers/shared_pref.dart';
 import 'package:free_chat/feats/auth/data/models/user_dm.dart';
 
 class SigninRepo {

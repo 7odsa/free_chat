@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:free_chat/feats/auth/data/helpers/shared_pref.dart';
+import 'package:free_chat/feats/auth/helpers/shared_pref.dart';
 import 'package:free_chat/feats/auth/data/models/user_dm.dart';
 import 'package:free_chat/feats/auth/presentation/screens/login_screen.dart';
 import 'package:free_chat/feats/chats/ui/chat_screen.dart';
@@ -25,6 +25,7 @@ final colorScheme = ColorScheme.fromSeed(
 
 class _MainAppState extends State<MainApp> {
   Widget screen = const LoginScreen();
+
   @override
   void initState() {
     super.initState();

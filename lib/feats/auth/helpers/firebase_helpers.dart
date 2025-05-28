@@ -12,7 +12,6 @@ abstract class FirebaseHelpers {
         password: password,
       );
       final id = credential.user!.uid;
-
       return id;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
