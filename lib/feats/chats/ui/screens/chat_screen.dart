@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:free_chat/feats/auth/helpers/firebase_helpers.dart';
 import 'package:free_chat/feats/auth/helpers/shared_pref.dart';
-import 'package:free_chat/feats/auth/data/models/user_dm.dart';
+import 'package:free_chat/feats/chats/ui/widgets/chat_messages.dart';
+import 'package:free_chat/feats/chats/ui/widgets/new_message.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -9,7 +10,7 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      // backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         title: Text('Fast-Chat'),
         actions: [
@@ -23,8 +24,8 @@ class ChatScreen extends StatelessWidget {
         ],
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [buildNoMsg()],
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: const [Expanded(child: ChatMessages()), NewMessage()],
       ),
     );
   }
