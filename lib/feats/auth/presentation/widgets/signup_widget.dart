@@ -3,18 +3,18 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:free_chat/feats/auth/data/models/user_dm.dart';
 import 'package:free_chat/feats/auth/data/repos/signup_repo.dart';
-import 'package:free_chat/feats/auth/presentation/screens/login_screen.dart';
-import 'package:free_chat/feats/chats/ui/chat_screen.dart';
+import 'package:free_chat/feats/auth/presentation/widgets/login_widget.dart';
 import 'package:image_picker/image_picker.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class SignUpWidget extends StatefulWidget {
+  const SignUpWidget({super.key, required this.onSwitchScreen});
+  final void Function() onSwitchScreen;
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignUpWidget> createState() => _SignUpWidgetState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpWidgetState extends State<SignUpWidget> {
   File? _selectedImage;
   bool isSigningup = false;
 
@@ -24,29 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 10, 135, 238),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 200,
-                  height: 200,
-                  child: Image.asset('assets/chat.png'),
-                ),
-                SizedBox(height: 32),
-                buildAuthSignup(context),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+    return buildAuthSignup(context);
   }
 
   Widget buildAuthSignup(BuildContext ctx) {
@@ -62,6 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         children: [
           buildAddImage(),
           TextField(
+            enableSuggestions: false,
             decoration: InputDecoration(
               labelText: "Email",
               labelStyle: TextStyle(color: Colors.black),
@@ -89,10 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           SizedBox(height: 8),
           TextButton(
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => LoginScreen()),
-              );
+              widget.onSwitchScreen();
             },
             child: Text(
               'Already have an account',
@@ -128,12 +104,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
               if (user != null) {
                 UserDM.currUser = user;
 
-                if (ctx.mounted) {
-                  Navigator.pushReplacement(
-                    ctx,
-                    MaterialPageRoute(builder: (context) => ChatScreen()),
-                  );
-                }
+                // if (ctx.mounted) {
+                //   Navigator.pushReplacement(
+                //     ctx,
+                //     MaterialPageRoute(builder: (context) => ChatScreen()),
+                //   );
+                // }
               }
             }
             setState(() {

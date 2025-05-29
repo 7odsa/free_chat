@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:free_chat/feats/auth/helpers/shared_pref.dart';
 import 'package:free_chat/feats/auth/data/models/user_dm.dart';
-import 'package:free_chat/feats/auth/presentation/screens/login_screen.dart';
+import 'package:free_chat/feats/auth/presentation/screens/auth_screen.dart';
+import 'package:free_chat/feats/auth/presentation/widgets/login_widget.dart';
 import 'package:free_chat/feats/chats/ui/chat_screen.dart';
 import 'package:free_chat/firebase_options.dart';
 
@@ -24,8 +26,6 @@ final colorScheme = ColorScheme.fromSeed(
 );
 
 class _MainAppState extends State<MainApp> {
-  Widget screen = const LoginScreen();
-
   @override
   void initState() {
     super.initState();
@@ -34,10 +34,21 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    if (UserDM.currUser != null) screen = ChatScreen();
     return MaterialApp(
       theme: ThemeData().copyWith(colorScheme: colorScheme),
-      home: screen,
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (ctx, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasData) {
+            return const ChatScreen();
+          } else {
+            return const AuthScreen();
+          }
+        },
+      ),
     );
   }
 

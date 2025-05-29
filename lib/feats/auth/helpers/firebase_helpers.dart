@@ -12,6 +12,7 @@ abstract class FirebaseHelpers {
         password: password,
       );
       final id = credential.user!.uid;
+      print('LOOOOOOOOOOOOOOOOOOOOOOOOL signedIN');
       return id;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -19,11 +20,16 @@ abstract class FirebaseHelpers {
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }
+      print('a77777777777777777777777777a ');
       return null;
     } catch (e) {
-      print("ERROR   $e");
+      print('a77777777777777777777777777a ');
       return null;
     }
+  }
+
+  static Stream<User?> authStateChanges() {
+    return _firebase.authStateChanges();
   }
 
   static Future<String?> signIn(String email, String password) async {

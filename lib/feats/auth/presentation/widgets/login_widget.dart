@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:free_chat/feats/auth/data/models/user_dm.dart';
 import 'package:free_chat/feats/auth/data/repos/signin_repo.dart';
-import 'package:free_chat/feats/auth/presentation/screens/signup_screen.dart';
-import 'package:free_chat/feats/chats/ui/chat_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginWidget extends StatefulWidget {
+  const LoginWidget({super.key, required this.onSwitchScreen});
+  final void Function() onSwitchScreen;
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginWidget> createState() => _LoginWidgetState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginWidgetState extends State<LoginWidget> {
   bool isSigningin = false;
 
   final emailController = TextEditingController();
@@ -19,32 +18,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 10, 135, 238),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 200,
-                  height: 200,
-                  child: Image.asset('assets/chat.png'),
-                ),
-                SizedBox(height: 32),
-                buildAuthLogin(context),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildAuthLogin(BuildContext ctx) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -56,10 +29,12 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextField(
+            enableSuggestions: false,
             decoration: InputDecoration(
               labelText: "Email",
               labelStyle: TextStyle(color: Colors.black),
             ),
+            autocorrect: false,
             controller: emailController,
           ),
           SizedBox(height: 8),
@@ -83,29 +58,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     email: emailController.text,
                     password: passwordController.text,
                   );
+
                   if (user != null) {
                     UserDM.currUser = user;
-                    if (ctx.mounted) {
-                      Navigator.pushReplacement(
-                        ctx,
-                        MaterialPageRoute(builder: (context) => ChatScreen()),
-                      );
-                    }
+                  } else {
+                    setState(() {
+                      isSigningin = false;
+                    });
                   }
-
-                  setState(() {
-                    isSigningin = false;
-                  });
                 },
                 child: Text('Login'),
               ),
           SizedBox(height: 8),
           TextButton(
             onPressed: () {
-              Navigator.pushReplacement(
-                ctx,
-                MaterialPageRoute(builder: (context) => SignUpScreen()),
-              );
+              widget.onSwitchScreen();
             },
             child: Text(
               'Create an account',
