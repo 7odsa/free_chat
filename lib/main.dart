@@ -5,7 +5,7 @@ import 'package:free_chat/feats/auth/helpers/shared_pref.dart';
 import 'package:free_chat/feats/auth/data/models/user_dm.dart';
 import 'package:free_chat/feats/auth/presentation/screens/auth_screen.dart';
 import 'package:free_chat/feats/auth/presentation/widgets/login_widget.dart';
-import 'package:free_chat/feats/chats/ui/chat_screen.dart';
+import 'package:free_chat/feats/chats/ui/screens/chat_screen.dart';
 import 'package:free_chat/firebase_options.dart';
 
 Future<void> main() async {

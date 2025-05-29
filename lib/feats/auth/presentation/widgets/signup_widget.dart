@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:free_chat/feats/auth/data/models/user_dm.dart';
 import 'package:free_chat/feats/auth/data/repos/signup_repo.dart';
-import 'package:free_chat/feats/auth/presentation/widgets/login_widget.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SignUpWidget extends StatefulWidget {
@@ -21,6 +20,14 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   final emailController = TextEditingController();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    usernameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
